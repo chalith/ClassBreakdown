@@ -28,7 +28,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/font-awesome/css/font-awesome.min.css"
             ],
             "scripts": []
           },
@@ -92,7 +94,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/font-awesome/css/font-awesome.min.css"
             ],
             "scripts": []
           }
@@ -123,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "class-breakdown"
+    }
+  },
+  "defaultProject": "class-breakdown",
+  "cli": {
+    "analytics": "93861b8d-b9b3-4da1-9ca8-39f39b6c7032"
+  }
 }

@@ -1,0 +1,130 @@
+<div class="container pt-4 pb-4">
+  <div class="card mb-2">
+    <div class="card-header">
+      <b>Add Classes & Subjects</b>
+    </div>
+    <div class="card-body pb-1">
+      <form>
+        <div class="form-group row">
+          <label class="col-2">Class Name</label>
+          <input type="text" name="className" class="form-control col-8" placeholder="Enter Class Name"
+            [(ngModel)]="curClassName">
+          <div class="col-2">
+            <button [disabled]="isEmpty(curClassName)" class="btn btn-primary pull-right" (click)="addClass()">Add
+              Class</button>
+          </div>
+        </div>
+      </form>
+      <form>
+        <div class="form-group row">
+          <label class="col-2">Subject</label>
+          <input type="text" name="subjectName" class="form-control col-8" placeholder="Enter Subject"
+            [(ngModel)]="curSubjectName">
+          <div class="col-2">
+            <button [disabled]="isEmpty(curSubjectName)" class="btn btn-primary pull-right" (click)="addSubject()">Add
+              Subject</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="card mb-4"
+    *ngIf="section && ((section.classes && section.classes.length) || (section.subjects && section.subjects.length))">
+    <div class="card-header">
+      <b>Class Subject Availability</b>
+    </div>
+    <div class="card-body pb-1">
+      <div class="row">
+        <div class="col border">
+          <b>Availability</b>
+        </div>
+        <div class="col border" *ngFor="let class of section.classes">
+          <b>{{ class.name }}</b>
+        </div>
+      </div>
+      <div class="row" *ngFor="let subject of section.subjects">
+        <div class="col border">
+          <b>{{ subject.name }}</b>
+        </div>
+        <div class="col border" *ngFor="let class of section.classes">
+          <div class="row">
+            <div class="col">
+              <span class="mr-2 mt-1 pull-left">{{ data.counts[subject.index][class.index].available }} of</span>
+              <div class="pull-left">
+                <number-input [min]="data.counts[subject.index][class.index].min" [step]="1"
+                  [(value)]="data.counts[subject.index][class.index].total"></number-input>
+              </div>
+              <span class="ml-2 mt-1 pull-left">remaining</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body pb-1">
+      <form>
+        <div class="form-group row">
+          <div class="col">
+            <button class="btn btn-danger pull-right" (click)="clear()">Clear</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="card mb-2" *ngIf="section && section.subjects">
+    <div class="card-header">
+      <b>Add Students</b>
+    </div>
+    <div class="card-body pb-1">
+      <form>
+        <div class="form-group row">
+          <label class="col-2">Student Name</label>
+          <input type="text" name="studentName" class="form-control col-8" placeholder="Enter Student Name"
+            [(ngModel)]="curStudentName">
+        </div>
+        <div class="form-group row">
+          <label class="col-2">Subject</label>
+          <div class="col-8 p-0">
+            <select-input placeholder="Select Subject" [options]="subjectList" [(value)]="selectedSubject">
+            </select-input>
+          </div>
+          <div class="col-2">
+            <button [disabled]="!selectedSubject" class="btn btn-primary pull-right" (click)="addStudentSubject()">Add
+              Subject</button>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <span *ngFor="let subject of curStudentSubjects" class="pr-1">
+              {{ subject.name }}
+            </span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <button [disabled]="isEmpty(curStudentName)" class="btn btn-primary pull-right" (click)="addStudent()">Add
+              Student</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="card" *ngIf="section && (section.students && section.students.length)">
+    <div class="card-header">
+      <b>Student Class Asignments</b>
+    </div>
+    <div class="card-body pb-1">
+      <div class="row" *ngFor="let student of section.students">
+        <div class="col border">
+          <span>{{ student.name }}</span>
+        </div>
+        <div class="col border">
+          <span *ngFor="let subject of student.subjects" class="mr-1">{{ subject.name }}</span>
+        </div>
+        <div class="col border">
+          <span *ngIf="student.classIdx != -1">{{ section.classes[student.classIdx].name }}</span>
+          <span *ngIf="student.classIdx == -1">No class available</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

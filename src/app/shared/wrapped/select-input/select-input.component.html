@@ -1,0 +1,4 @@
+<select class="form-control" [(ngModel)]="_value" (ngModelChange)="onValueChange($event)" [disabled]="disabled">
+  <option [value]="null" [disabled]="required">{{ placeholder }}</option>
+  <option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
+</select>

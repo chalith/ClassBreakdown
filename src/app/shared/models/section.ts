@@ -37,7 +37,6 @@ export class Availability {
     this.available += this._total - prev;
   }
 
-  _total: number;
-  available: number;
-  min: number = 0;
+  _total: number = 0;
+  available: number = 0;
 }

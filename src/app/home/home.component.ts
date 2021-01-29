@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit {
           let availbility = new Availability();
           availbility.total = c._total;
           availbility.available = c.available;
-          availbility.min = c.min;
           return availbility;
         }));
       }
@@ -215,7 +214,6 @@ export class HomeComponent implements OnInit {
     student.classIdx = classIdx;
     for (let s of student.subjects) {
       this.data.counts[s.index][classIdx].available--;
-      this.data.counts[s.index][classIdx].min = this.data.counts[s.index][classIdx].total;
     }
   }
 

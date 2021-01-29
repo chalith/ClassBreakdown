@@ -10,10 +10,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SelectInputModule } from './shared/wrapped/select-input/select-input.module';
 import { NumberInputModule } from './shared/wrapped/number-input/number-input.module';
+import { ReportComponent } from './areas/report/report.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ReportComponent,
     FullLayoutComponent
   ],
   imports: [

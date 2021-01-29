@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
 import { LocalStorageKeys } from '../shared/constants';
 import { JsonHelper } from '../shared/helpers/json-helper';
@@ -27,7 +28,8 @@ export class HomeComponent implements OnInit {
   curStudentName: string;
   curStudentSubjects: Subject[] = [];
 
-  constructor(private localStorageService: LocalStorageService) {
+  constructor(private localStorageService: LocalStorageService,
+    private router: Router) {
     window.onbeforeunload = () => {
       this.save();
     }
@@ -173,7 +175,7 @@ export class HomeComponent implements OnInit {
           break;
       }
       if (available) {
-        classes.push(<SortClass> {
+        classes.push(<SortClass>{
           classIdx: c.index,
           notSelectedAvailability: 0,
           selectedAvailability: 0,
@@ -228,6 +230,24 @@ export class HomeComponent implements OnInit {
     this.loadIfExist();
 
     alert('Data cleared');
+  }
+
+  getStudentsOfClass(classIdx: number) {
+    return this.section.students.filter(s => s.classIdx === classIdx);
+  }
+
+  generateReport() {
+    this.router.navigate(['report']);
+  }
+
+  removeStudent(student: Student) {
+    if (confirm(`Are you sure you want to delete ${student.name}?`)) {
+      this.section.students = this.section.students.filter(s => s.index !== student.index);
+      for (let s of student.subjects) {
+        this.data.counts[s.index][student.classIdx].available++;
+      }
+      alert(`Deleted ${student.name}`)
+    }
   }
 
 }

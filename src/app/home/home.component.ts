@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
 import { LocalStorageKeys } from '../shared/constants';
@@ -14,7 +14,7 @@ import { Subject } from '../shared/models/subject';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   section: Section;
   data: ClassSubjectCounts;
@@ -37,6 +37,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.loadIfExist();
+  }
+
+  ngOnDestroy() {
+    this.save();
   }
 
   loadIfExist() {
@@ -142,7 +146,7 @@ export class HomeComponent implements OnInit {
     this.pickClass(curStudent);
 
     this.section.students.push(curStudent);
-    this.section.students = this.section.students.sort((a, b) => a.classIdx - b.classIdx);
+    this.section.students = this.section.students.sort((a, b) => a.index - b.index);
 
     this.curStudentName = null;
     this.curStudentSubjects = [];

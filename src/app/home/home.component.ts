@@ -234,6 +234,14 @@ export class HomeComponent implements OnInit {
     return this.section.students.filter(s => s.classIdx === classIdx);
   }
 
+  getStudentsWithNoClass() {
+    return this.section.students.filter(s => s.classIdx == -1);
+  }
+
+  getStudentsWithClass() {
+    return this.section.students.filter(s => s.classIdx >= 0);
+  }
+
   generateReport() {
     this.router.navigate(['report']);
   }
@@ -241,8 +249,10 @@ export class HomeComponent implements OnInit {
   removeStudent(student: Student) {
     if (confirm(`Are you sure you want to delete ${student.name}?`)) {
       this.section.students = this.section.students.filter(s => s.index !== student.index);
-      for (let s of student.subjects) {
-        this.data.counts[s.index][student.classIdx].available++;
+      if (student.classIdx >= 0) {
+        for (let s of student.subjects) {
+          this.data.counts[s.index][student.classIdx].available++;
+        }
       }
       alert(`Deleted ${student.name}`)
     }

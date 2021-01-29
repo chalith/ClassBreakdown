@@ -26,6 +26,14 @@ export class ReportComponent implements OnInit {
     return this.section.students.filter(s => s.classIdx === classIdx);
   }
 
+  getStudentsWithNoClass() {
+    return this.section.students.filter(s => s.classIdx == -1);
+  }
+
+  getStudentsWithClass() {
+    return this.section.students.filter(s => s.classIdx >= 0);
+  }
+
   openPrint() {
     var css = '@page { size: landscape; }',
       head = document.head || document.getElementsByTagName('head')[0],

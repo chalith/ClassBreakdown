@@ -228,6 +228,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   clear() {
     this.section.classes = [];
     this.section.subjects = [];
+    this.initData();
+
+    for (let student of this.section.students) {
+      student.classIdx = -1;
+    }
 
     alert('Data cleared');
   }

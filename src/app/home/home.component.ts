@@ -60,7 +60,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (data) {
       this.initData();
       for (let subject of data.counts) {
-
         this.data.counts.push(subject.map(c => {
           let availbility = new Availability();
           availbility.total = c._total;
@@ -227,11 +226,28 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   clear() {
-    this.localStorageService.removeItem(LocalStorageKeys.Section);
-    this.localStorageService.removeItem(LocalStorageKeys.Counts);
-    this.loadIfExist();
+    this.section.classes = [];
+    this.section.subjects = [];
 
     alert('Data cleared');
+  }
+
+  subjectCountChanged(curSubject: Subject, curClass: Class) {
+    if (this.data.counts[curSubject.index][curClass.index].available > 0) {
+      for (let student of this.getStudentsWithNoClass()) {
+        if (student.subjects.findIndex(s => s.index === curSubject.index) >= 0) {
+          let available = true;
+          for (let s of student.subjects) {
+            available = this.data.counts[s.index][curClass.index].available > 0;
+            if (!available)
+              break;
+          }
+          if (available) {
+            this.setClass(curClass.index, student);
+          }
+        }
+      }
+    }
   }
 
   getStudentsOfClass(classIdx: number) {

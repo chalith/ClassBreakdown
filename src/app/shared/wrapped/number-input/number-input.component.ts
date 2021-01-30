@@ -16,24 +16,29 @@ export class NumberInputComponent implements OnInit {
     return this._value;
   }
   set value(value: number) {
-    setTimeout(() => {
-      if (isNaN(value) || value === null) {
-        this._value = this.prevValue;
-      }
-      else if (value > this.max || value < this.min) {
-        this._value = this.prevValue;
-      }
-      else {
-        this._value = parseFloat(value.toFixed(this.precision));
-        this.prevValue = this._value;
-      }
-      this.valueChange.emit(this._value);
-      if (!this.firstLoad) {
-        this.onChange.emit(this._value);
-        this.firstLoad = false;
-      }
-    });
+    if (this.prevValue !== value) {
+      setTimeout(() => {
+        if (isNaN(value) || value === null) {
+          this._value = this.prevValue;
+        }
+        else if (value > this.max || value < this.min) {
+          this._value = this.prevValue;
+        }
+        else {
+          this._value = parseFloat(value.toFixed(this.precision));
+          this.prevValue = this._value;
+        }
+        this.valueChange.emit(this._value);
+        if (!this.firstLoad) {
+          this.onChange.emit(this._value);
+        }
+        else {
+          this.firstLoad = false;
+        }
+      });
+    }
   }
+
   @Input() required: boolean = false;
   @Input() readOnly: boolean = false;
   @Input() disabled: boolean = false;

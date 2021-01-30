@@ -55,7 +55,7 @@
               <div class="pull-left">
                 <number-input
                   [min]="data.counts[subject.index][class.index].total - data.counts[subject.index][class.index].available"
-                  [step]="1" [(value)]="data.counts[subject.index][class.index].total"></number-input>
+                  [step]="1" [(value)]="data.counts[subject.index][class.index].total" (onChange)="subjectCountChanged(subject, class)"></number-input>
               </div>
               <span class="ml-2 mt-1 pull-left">remaining</span>
             </div>
